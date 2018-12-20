@@ -1,0 +1,148 @@
+#Fill in variables below
+#——————————————————————————————————————
+#Simple Variables /////////////////////
+#——————————————————————————————————————
+
+#Replace any variable with 'ask' if you want the program to ask you once started
+
+#Your Email
+email = 'mvalentin838@gmail.com'
+
+#Your Password
+password = 'Brooklyn8*'
+
+#The Reciprient's Email
+send_to_email = 'mvalentin8389@gmail.com' 
+
+#The Subject, 'random' to randomize
+subject = "random"
+
+#The message you want to send
+message = '''
+
+OwO
+'''
+
+#An attachment you want to send
+attachment_file = ''
+
+#How mant times you want to send the message
+times = 1
+
+#——————————————————————————————————————
+#Specific Variables ///////////////////
+#——————————————————————————————————————
+
+#Large Number
+large_int = 1000000000000000000
+
+#The max number random subject can go up to
+subject_max = large_int
+
+#
+
+#                       Welcome Screen                      _____
+#      ____________________________________________________/ (O) \____/
+# /--/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\      /    \
+#/———————————————————————————————————————————————————————————————
+
+print('''
+       Welcome to SnakeMail _____
+      _____________________/ (O) \____/
+     /__\_/_\_/_\_/_\_/_\_/______/    \
+
+ ''')
+
+#                       "Ask" Program                       _____
+#      ____________________________________________________/ (O) \____/
+# /--/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\      /    \
+#/———————————————————————————————————————————————————————————————
+
+
+if email == 'ask':
+        email = input("Your Email: ")
+if password == 'ask':
+        password = input("Password: ")
+if send_to_email == 'ask':
+        send_to_email = input("Reciprient: ")
+if subject == 'ask':
+        subject = input("Subject")
+if subject == 'random':
+        import random
+        subject = str(random.randint(0, int(subject_max)))
+if message == 'ask':
+        print("Message: (Ctrl + D to finish)")
+        contents = []
+        while True:
+            try:
+                message = input()
+            except EOFError:
+                break
+            contents.append(message)
+            message = '\n'.join(item for item in contents[0:])
+if attachment_file == 'ask':
+        attachment_file = input("Attachment: ")
+if times == 'ask':
+        times = input("Times: ")
+if times > 1:
+        subject = subject + " - " + x
+
+#                       Sending Email                       _____
+#      ____________________________________________________/ (O) \____/
+#/---/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\      /    \
+#\———————————————————————————————————————————————————————————————
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+import os.path
+x = 0
+
+for i in range(times):
+    x = int(x)+ 1
+    x = str(x)
+
+    msg = MIMEMultipart()
+    msg['From'] = email
+    msg['To'] = send_to_email
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(message, 'plain'))
+
+    if attachment_file != '':
+            filename = os.path.basename(attachment_file)
+            attachment = open(attachment_file, "rb")
+            part = MIMEBase('application', 'octet-stream')
+            part.set_payload((attachment).read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+            msg.attach(part)
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(email, password)
+    text = msg.as_string()
+    #input(">")
+    server.sendmail(email, send_to_email, text)
+    server.quit()
+    print("Message Sent")
+
+##  ______________________
+## /  \ | Message Sent! | / \
+##|\___\|_______________|/ / \
+##|————|   ____________  \/ / \_____________
+##|————|  /__| | | |  /\  \/ /| | | | |  / _\
+##|————| |———\_|_|_|_/  \  \/_|_|_|_|_| /_/ |
+##|————| |———|      \__/ \              |———|
+##|————|  \  \_      \———|              |———|
+##|————|   \___\__   |———|              |   |
+##|————|_____________|———|             /     \
+##|___/  /  /  /  /  /  _|            /       \
+##\_____/__/__/__/__/__/_|            |(O) (O)|
+##                                     \     /
+##                                      \___/
+##                                        |
+##                                        |
+##                                        /\
